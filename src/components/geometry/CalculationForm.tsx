@@ -54,7 +54,7 @@ export function CalculationForm({ shape, onBack, onCalculate }: CalculationFormP
       const results: { [key: string]: CalculationResult } = {}
       
       // Validate all inputs are numbers
-      for (const [calc, calcInputs] of Object.entries(inputs)) {
+      for (const [, calcInputs] of Object.entries(inputs)) {
         const values = Object.values(calcInputs).map(Number)
         if (values.some(isNaN)) {
           throw new Error("Please enter valid numbers for all inputs")
