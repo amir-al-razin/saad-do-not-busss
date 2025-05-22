@@ -123,3 +123,7 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 - Styled with [Tailwind CSS](https://tailwindcss.com/)
 - Icons from [Lucide Icons](https://lucide.dev/)
 - UI components from [shadcn/ui](https://ui.shadcn.com/)
+
+---
+
+© 2024 Amir. All rights reserved.
