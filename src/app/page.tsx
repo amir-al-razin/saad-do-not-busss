@@ -310,7 +310,6 @@ export default function Home() {
                 shape={selectedShape}
                 onBack={() => setSelectedShape(null)}
                 onCalculate={handleCalculate}
-                buttonSize="lg"
               />
               <div className="max-w-2xl mx-auto mt-12">
                 <Results results={results} />
