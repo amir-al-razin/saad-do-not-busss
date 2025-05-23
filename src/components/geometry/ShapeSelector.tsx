@@ -100,7 +100,7 @@ export function ShapeSelector({ shapes, onSelect }: ShapeSelectorProps) {
           placeholder="Search shapes..."
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
-          className="w-full p-3 pl-10 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-background text-foreground border-input"
+          className="w-full p-3 pl-10 border-2 border-white/60 dark:border-white/30 rounded-lg bg-white/30 dark:bg-white/10 backdrop-blur-md text-foreground focus:outline-none focus:ring-2 focus:ring-black dark:focus:ring-white"
         />
         <Search className="absolute left-3 top-3.5 h-5 w-5 text-muted-foreground" />
       </div>
@@ -115,11 +115,11 @@ export function ShapeSelector({ shapes, onSelect }: ShapeSelectorProps) {
                 <Button
                   key={shape.name}
                   variant="outline"
-                  className="justify-start h-auto py-3 px-4 hover:bg-accent hover:text-accent-foreground transition-colors group"
+                  className="justify-start h-auto py-3 px-4 bg-white/30 dark:bg-white/10 hover:bg-accent hover:text-accent-foreground transition-colors group backdrop-blur-md min-w-0"
                   onClick={() => onSelect(shape)}
                 >
                   {getIcon(shape.name)}
-                  <span>{shape.name}</span>
+                  <span className="truncate text-ellipsis overflow-hidden whitespace-nowrap text-left">{shape.name}</span>
                 </Button>
               ))}
             {filteredShapes.filter(shape => shape.category === "2D").length === 0 && (
@@ -137,11 +137,11 @@ export function ShapeSelector({ shapes, onSelect }: ShapeSelectorProps) {
                 <Button
                   key={shape.name}
                   variant="outline"
-                  className="justify-start h-auto py-3 px-4 hover:bg-accent hover:text-accent-foreground transition-colors group"
+                  className="justify-start h-auto py-3 px-4 bg-white/30 dark:bg-white/10 hover:bg-accent hover:text-accent-foreground transition-colors group backdrop-blur-md min-w-0"
                   onClick={() => onSelect(shape)}
                 >
                   {getIcon(shape.name)}
-                  <span>{shape.name}</span>
+                  <span className="truncate text-ellipsis overflow-hidden whitespace-nowrap text-left">{shape.name}</span>
                 </Button>
               ))}
             {filteredShapes.filter(shape => shape.category === "3D").length === 0 && (

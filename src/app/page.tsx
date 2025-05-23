@@ -5,6 +5,8 @@ import { Shape, CalculationResult } from "@/types/geometry"
 import { ShapeSelector } from "@/components/geometry/ShapeSelector"
 import { CalculationForm } from "@/components/geometry/CalculationForm"
 import { Results } from "@/components/geometry/Results"
+import { InteractiveGridPattern } from "@/components/magicui/interactive-grid-pattern"
+import { AuroraText } from "@/components/magicui/aurora-text"
 
 const shapes: Shape[] = [
   // 2D Shapes
@@ -287,25 +289,36 @@ export default function Home() {
   }
 
   return (
-    <div className="min-h-screen p-8">
-      <h1 className="text-4xl font-bold mb-8 text-center">Geometry Calculator</h1>
-      
-      {!selectedShape ? (
-        <ShapeSelector shapes={shapes} onSelect={handleShapeSelect} />
-      ) : (
-        <div className="flex flex-col lg:flex-row gap-8">
-          <div className="flex-1">
-            <CalculationForm
-              shape={selectedShape}
-              onBack={() => setSelectedShape(null)}
-              onCalculate={handleCalculate}
-            />
-            <div className="max-w-2xl mx-auto mt-8">
-              <Results results={results} />
+    <div className="relative min-h-screen p-12 glass" style={{ maxWidth: '1200px', margin: '0 auto' }}>
+      {/* Interactive grid background */}
+      <InteractiveGridPattern
+        className="pointer-events-none fixed inset-0 w-screen h-screen z-10 [mask-image:radial-gradient(700px_circle_at_center,white,transparent)]"
+        width={32}
+        height={32}
+        squares={[80, 45]}
+      />
+      <div className="relative z-10">
+        <h1 className="text-5xl font-bold mb-12 text-center">
+          <AuroraText colors={["#232526", "#434343", "#bdbdbd", "#ffffff"]}>Geometry Calculator</AuroraText>
+        </h1>
+        {!selectedShape ? (
+          <ShapeSelector shapes={shapes} onSelect={handleShapeSelect} />
+        ) : (
+          <div className="flex flex-col lg:flex-row gap-12">
+            <div className="flex-1 glass-card">
+              <CalculationForm
+                shape={selectedShape}
+                onBack={() => setSelectedShape(null)}
+                onCalculate={handleCalculate}
+                buttonSize="lg"
+              />
+              <div className="max-w-2xl mx-auto mt-12">
+                <Results results={results} />
+              </div>
             </div>
           </div>
-        </div>
-      )}
+        )}
+      </div>
     </div>
   )
 }

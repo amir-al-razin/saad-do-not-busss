@@ -366,7 +366,7 @@ export function CalculationForm({ shape, onBack, onCalculate }: CalculationFormP
                 type="text"
                 inputMode="decimal"
                 pattern="^-?\\d*\\.?\\d+(e-?\\d+)?$"
-                className="w-full p-2 border rounded-md bg-background text-foreground border-input focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full p-2 border-2 border-white/60 dark:border-white/30 rounded-lg bg-white/30 dark:bg-white/10 backdrop-blur-md text-foreground focus:outline-none focus:ring-2 focus:ring-black dark:focus:ring-white shadow-[0_2px_16px_0_rgba(255,255,255,0.10)]"
                 placeholder={input.placeholder}
                 value={inputs[input.label] || ""}
                 onChange={(e) => handleInputChange(input.label, e.target.value)}
@@ -383,13 +383,13 @@ export function CalculationForm({ shape, onBack, onCalculate }: CalculationFormP
       )}
 
       <div className="flex gap-4">
-        <Button onClick={handleCalculate} disabled={isLoading}>
+        <Button onClick={handleCalculate} disabled={isLoading} size="lg" className="text-lg py-3 px-6">
           {isLoading ? "Calculating..." : "Calculate All Properties"}
         </Button>
         <Button variant="outline" onClick={() => {
           setInputs({})
           setError("")
-        }}>
+        }} size="lg" className="text-lg py-3 px-6">
           Clear
         </Button>
       </div>
