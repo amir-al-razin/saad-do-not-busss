@@ -2,7 +2,7 @@
 
 import { Button } from "@/components/ui/button"
 import { Shape, CalculationResult } from "@/types/geometry"
-import { useState, useEffect } from "react"
+import { useState, useEffect, useCallback } from "react"
 import * as calculations from "@/lib/geometry-calculations"
 
 interface CalculationFormProps {
@@ -16,7 +16,7 @@ export function CalculationForm({ shape, onBack, onCalculate }: CalculationFormP
   const [error, setError] = useState<string>("")
   const [isLoading, setIsLoading] = useState(false)
 
-  const handleCalculate = () => {
+  const handleCalculate = useCallback(() => {
     try {
       setIsLoading(true)
       const results: { [key: string]: CalculationResult } = {}
@@ -307,7 +307,7 @@ export function CalculationForm({ shape, onBack, onCalculate }: CalculationFormP
     } finally {
       setIsLoading(false)
     }
-  }
+  }, [inputs, shape, onCalculate, setIsLoading, setError])
 
   // Add global keyboard shortcut support
   useEffect(() => {
@@ -323,7 +323,7 @@ export function CalculationForm({ shape, onBack, onCalculate }: CalculationFormP
     }
     window.addEventListener("keydown", handleGlobalKeyDown)
     return () => window.removeEventListener("keydown", handleGlobalKeyDown)
-  }, [onBack, handleCalculate])
+  }, [onBack, handleCalculate, setInputs, setError])
 
   // Get unique inputs across all calculations
   const uniqueInputs = Array.from(new Set(
