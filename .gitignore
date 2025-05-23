@@ -39,3 +39,10 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Remove npm lock file
+!/package-lock.json
+# Add pnpm lock file
+dist
+.pnpm-debug.log
+pnpm-lock.yaml

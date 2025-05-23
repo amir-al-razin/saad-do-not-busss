@@ -2,7 +2,7 @@
 
 import { Button } from "@/components/ui/button"
 import { Shape, CalculationResult } from "@/types/geometry"
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import * as calculations from "@/lib/geometry-calculations"
 
 interface CalculationFormProps {
@@ -15,26 +15,6 @@ export function CalculationForm({ shape, onBack, onCalculate }: CalculationFormP
   const [inputs, setInputs] = useState<{ [key: string]: string }>({})
   const [error, setError] = useState<string>("")
   const [isLoading, setIsLoading] = useState(false)
-
-  // Get unique inputs across all calculations
-  const uniqueInputs = Array.from(new Set(
-    shape.calculations.flatMap(calc => 
-      shape.requiredInputs[calc].map(input => input.label)
-    )
-  )).map(label => {
-    const firstCalc = shape.calculations.find(calc => 
-      shape.requiredInputs[calc].some(input => input.label === label)
-    )
-    const input = shape.requiredInputs[firstCalc!].find(input => input.label === label)!
-    return { label, type: input.type, placeholder: input.placeholder }
-  })
-
-  const handleInputChange = (label: string, value: string) => {
-    setInputs(prev => ({
-      ...prev,
-      [label]: value
-    }))
-  }
 
   const handleCalculate = () => {
     try {
@@ -181,15 +161,16 @@ export function CalculationForm({ shape, onBack, onCalculate }: CalculationFormP
           break
 
         case "Isosceles Triangle":
-          const isoBase = Number(inputs["Base"])
-          const isoHeight = Number(inputs["Height"])
           const isoEqualSide = Number(inputs["Equal side"])
+          const isoBase = Number(inputs["Base (opposite side)"])
+          // Calculate height from equal sides and base
+          const isoHeight = Math.sqrt(isoEqualSide * isoEqualSide - (isoBase * isoBase) / 4)
           results["Area"] = {
-            value: calculations.calculateTriangle.isosceles.area(isoBase, isoHeight),
+            value: (isoBase * isoHeight) / 2,
             unit: "square units"
           }
           results["Perimeter"] = {
-            value: calculations.calculateTriangle.isosceles.perimeter(isoBase, isoEqualSide),
+            value: isoBase + 2 * isoEqualSide,
             unit: "units"
           }
           break
@@ -211,17 +192,13 @@ export function CalculationForm({ shape, onBack, onCalculate }: CalculationFormP
         case "Right Triangle":
           const rightBase = Number(inputs["Base"])
           const rightHeight = Number(inputs["Height"])
-          const rightHypotenuse = calculations.calculateTriangle.right.hypotenuse(rightBase, rightHeight)
+          const rightHypotenuse = Math.sqrt(rightBase * rightBase + rightHeight * rightHeight)
           results["Area"] = {
-            value: calculations.calculateTriangle.right.area(rightBase, rightHeight),
+            value: (rightBase * rightHeight) / 2,
             unit: "square units"
           }
           results["Perimeter"] = {
-            value: calculations.calculateTriangle.right.perimeter(rightBase, rightHeight, rightHypotenuse),
-            unit: "units"
-          }
-          results["Hypotenuse"] = {
-            value: rightHypotenuse,
+            value: rightBase + rightHeight + rightHypotenuse,
             unit: "units"
           }
           break
@@ -332,19 +309,44 @@ export function CalculationForm({ shape, onBack, onCalculate }: CalculationFormP
     }
   }
 
-  const handleKeyPress = (e: React.KeyboardEvent) => {
-    if (e.key === "Enter") {
-      handleCalculate()
-    } else if (e.key === "Escape") {
-      onBack()
-    } else if (e.key === "c") {
-      setInputs({})
-      setError("")
+  // Add global keyboard shortcut support
+  useEffect(() => {
+    const handleGlobalKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Enter") {
+        handleCalculate()
+      } else if (e.key === "Escape") {
+        onBack()
+      } else if (e.key.toLowerCase() === "c") {
+        setInputs({})
+        setError("")
+      }
     }
+    window.addEventListener("keydown", handleGlobalKeyDown)
+    return () => window.removeEventListener("keydown", handleGlobalKeyDown)
+  }, [onBack, handleCalculate])
+
+  // Get unique inputs across all calculations
+  const uniqueInputs = Array.from(new Set(
+    shape.calculations.flatMap(calc => 
+      shape.requiredInputs[calc].map(input => input.label)
+    )
+  )).map(label => {
+    const firstCalc = shape.calculations.find(calc => 
+      shape.requiredInputs[calc].some(input => input.label === label)
+    )
+    const input = shape.requiredInputs[firstCalc!].find(input => input.label === label)!
+    return { label, type: input.type, placeholder: input.placeholder }
+  })
+
+  const handleInputChange = (label: string, value: string) => {
+    setInputs(prev => ({
+      ...prev,
+      [label]: value
+    }))
   }
 
   return (
-    <div className="max-w-2xl mx-auto space-y-6" onKeyDown={handleKeyPress}>
+    <div className="max-w-2xl mx-auto space-y-6">
       <div className="flex items-center justify-between">
         <h2 className="text-2xl font-semibold">{shape.name}</h2>
         <Button variant="ghost" onClick={onBack}>
@@ -360,7 +362,10 @@ export function CalculationForm({ shape, onBack, onCalculate }: CalculationFormP
                 {input.label}
               </label>
               <input
-                type="number"
+                // type="number"
+                type="text"
+                inputMode="decimal"
+                pattern="^-?\\d*\\.?\\d+(e-?\\d+)?$"
                 className="w-full p-2 border rounded-md bg-background text-foreground border-input focus:outline-none focus:ring-2 focus:ring-blue-500"
                 placeholder={input.placeholder}
                 value={inputs[input.label] || ""}

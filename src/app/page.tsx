@@ -33,9 +33,9 @@ const shapes: Shape[] = [
     category: "2D",
     calculations: ["Area", "Perimeter", "Diagonal"],
     requiredInputs: {
-      "Area": [{ label: "Side length", type: "number", placeholder: "Enter side length" }],
-      "Perimeter": [{ label: "Side length", type: "number", placeholder: "Enter side length" }],
-      "Diagonal": [{ label: "Side length", type: "number", placeholder: "Enter side length" }]
+      Area: [{ label: "Side length", type: "number", placeholder: "Enter side length" }],
+      Perimeter: [{ label: "Side length", type: "number", placeholder: "Enter side length" }],
+      Diagonal: [{ label: "Side length", type: "number", placeholder: "Enter side length" }]
     }
   },
   {
@@ -43,15 +43,15 @@ const shapes: Shape[] = [
     category: "2D",
     calculations: ["Area", "Perimeter", "Diagonal"],
     requiredInputs: {
-      "Area": [
+      Area: [
         { label: "Length", type: "number", placeholder: "Enter length" },
         { label: "Width", type: "number", placeholder: "Enter width" }
       ],
-      "Perimeter": [
+      Perimeter: [
         { label: "Length", type: "number", placeholder: "Enter length" },
         { label: "Width", type: "number", placeholder: "Enter width" }
       ],
-      "Diagonal": [
+      Diagonal: [
         { label: "Length", type: "number", placeholder: "Enter length" },
         { label: "Width", type: "number", placeholder: "Enter width" }
       ]
@@ -130,13 +130,13 @@ const shapes: Shape[] = [
     category: "2D",
     calculations: ["Area", "Perimeter"],
     requiredInputs: {
-      "Area": [
-        { label: "Base", type: "number", placeholder: "Enter base" },
-        { label: "Height", type: "number", placeholder: "Enter height" }
+      Area: [
+        { label: "Equal side", type: "number", placeholder: "Enter equal side length" },
+        { label: "Base (opposite side)", type: "number", placeholder: "Enter base length" }
       ],
-      "Perimeter": [
-        { label: "Base", type: "number", placeholder: "Enter base" },
-        { label: "Equal side", type: "number", placeholder: "Enter equal side length" }
+      Perimeter: [
+        { label: "Equal side", type: "number", placeholder: "Enter equal side length" },
+        { label: "Base (opposite side)", type: "number", placeholder: "Enter base length" }
       ]
     }
   },
@@ -160,19 +160,14 @@ const shapes: Shape[] = [
   {
     name: "Right Triangle",
     category: "2D",
-    calculations: ["Area", "Perimeter", "Hypotenuse"],
+    calculations: ["Area", "Perimeter"],
     requiredInputs: {
-      "Area": [
-        { label: "Base", type: "number", placeholder: "Enter base" },
+      Area: [
+        { label: "Base", type: "number", placeholder: "Enter base length" },
         { label: "Height", type: "number", placeholder: "Enter height" }
       ],
-      "Perimeter": [
-        { label: "Base", type: "number", placeholder: "Enter base" },
-        { label: "Height", type: "number", placeholder: "Enter height" },
-        { label: "Hypotenuse", type: "number", placeholder: "Enter hypotenuse" }
-      ],
-      "Hypotenuse": [
-        { label: "Base", type: "number", placeholder: "Enter base" },
+      Perimeter: [
+        { label: "Base", type: "number", placeholder: "Enter base length" },
         { label: "Height", type: "number", placeholder: "Enter height" }
       ]
     }
@@ -184,9 +179,9 @@ const shapes: Shape[] = [
     category: "3D",
     calculations: ["Volume", "Surface Area", "Diagonal"],
     requiredInputs: {
-      "Volume": [{ label: "Side length", type: "number", placeholder: "Enter side length" }],
+      Volume: [{ label: "Side length", type: "number", placeholder: "Enter side length" }],
       "Surface Area": [{ label: "Side length", type: "number", placeholder: "Enter side length" }],
-      "Diagonal": [{ label: "Side length", type: "number", placeholder: "Enter side length" }]
+      Diagonal: [{ label: "Side length", type: "number", placeholder: "Enter side length" }]
     }
   },
   {
@@ -194,7 +189,7 @@ const shapes: Shape[] = [
     category: "3D",
     calculations: ["Volume", "Surface Area", "Diagonal"],
     requiredInputs: {
-      "Volume": [
+      Volume: [
         { label: "Length", type: "number", placeholder: "Enter length" },
         { label: "Width", type: "number", placeholder: "Enter width" },
         { label: "Height", type: "number", placeholder: "Enter height" }
@@ -204,7 +199,7 @@ const shapes: Shape[] = [
         { label: "Width", type: "number", placeholder: "Enter width" },
         { label: "Height", type: "number", placeholder: "Enter height" }
       ],
-      "Diagonal": [
+      Diagonal: [
         { label: "Length", type: "number", placeholder: "Enter length" },
         { label: "Width", type: "number", placeholder: "Enter width" },
         { label: "Height", type: "number", placeholder: "Enter height" }
@@ -216,7 +211,7 @@ const shapes: Shape[] = [
     category: "3D",
     calculations: ["Volume", "Surface Area"],
     requiredInputs: {
-      "Volume": [{ label: "Radius", type: "number", placeholder: "Enter radius" }],
+      Volume: [{ label: "Radius", type: "number", placeholder: "Enter radius" }],
       "Surface Area": [{ label: "Radius", type: "number", placeholder: "Enter radius" }]
     }
   },
@@ -225,7 +220,7 @@ const shapes: Shape[] = [
     category: "3D",
     calculations: ["Volume", "Surface Area"],
     requiredInputs: {
-      "Volume": [
+      Volume: [
         { label: "Radius", type: "number", placeholder: "Enter radius" },
         { label: "Height", type: "number", placeholder: "Enter height" }
       ],
@@ -240,7 +235,7 @@ const shapes: Shape[] = [
     category: "3D",
     calculations: ["Volume", "Surface Area"],
     requiredInputs: {
-      "Volume": [
+      Volume: [
         { label: "Radius", type: "number", placeholder: "Enter radius" },
         { label: "Height", type: "number", placeholder: "Enter height" }
       ],
@@ -255,7 +250,7 @@ const shapes: Shape[] = [
     category: "3D",
     calculations: ["Volume", "Surface Area"],
     requiredInputs: {
-      "Volume": [
+      Volume: [
         { label: "Base area", type: "number", placeholder: "Enter base area" },
         { label: "Height", type: "number", placeholder: "Enter height" }
       ],
@@ -270,7 +265,7 @@ const shapes: Shape[] = [
     category: "3D",
     calculations: ["Volume"],
     requiredInputs: {
-      "Volume": [
+      Volume: [
         { label: "Base area", type: "number", placeholder: "Enter base area" },
         { label: "Height", type: "number", placeholder: "Enter height" }
       ]
