@@ -97,15 +97,15 @@ export function CalculationForm({ shape, onBack, onCalculate }: CalculationFormP
           break
 
         case "Parallelogram":
-          const paraBase = Number(inputs["Base"])
-          const paraSide = Number(inputs["Side"])
-          const paraHeight = Number(inputs["Height"])
+          const para1 = Number(inputs["Side1"])
+          const para2 = Number(inputs["Side2"])
+          const angle = Number(inputs["Angle (degrees)"])
           results["Area"] = {
-            value: calculations.calculateParallelogram.area(paraBase, paraHeight),
+            value: calculations.calculateParallelogram.area(para1, para2, angle),
             unit: "square units"
           }
           results["Perimeter"] = {
-            value: calculations.calculateParallelogram.perimeter(paraBase, paraSide),
+            value: calculations.calculateParallelogram.perimeter(para1, para2),
             unit: "units"
           }
           break
@@ -122,7 +122,7 @@ export function CalculationForm({ shape, onBack, onCalculate }: CalculationFormP
             unit: "units"
           }
           results["Perimeter"] = {
-            value: calculations.calculateRhombus.perimeter(results["Side Length"].value),
+            value: calculations.calculateRhombus.perimeter(rhombusD1, rhombusD2),
             unit: "units"
           }
           break
@@ -163,6 +163,9 @@ export function CalculationForm({ shape, onBack, onCalculate }: CalculationFormP
         case "Isosceles Triangle":
           const isoEqualSide = Number(inputs["Equal side"])
           const isoBase = Number(inputs["Base (opposite side)"])
+          if (2 * isoEqualSide <= isoBase) {
+            throw new Error("Not a valid triangle")
+          }
           // Calculate height from equal sides and base
           const isoHeight = Math.sqrt(isoEqualSide * isoEqualSide - (isoBase * isoBase) / 4)
           results["Area"] = {
@@ -179,6 +182,13 @@ export function CalculationForm({ shape, onBack, onCalculate }: CalculationFormP
           const scaleneA = Number(inputs["Side a"])
           const scaleneB = Number(inputs["Side b"])
           const scaleneC = Number(inputs["Side c"])
+          if (
+            scaleneA + scaleneB <= scaleneC ||
+            scaleneA + scaleneC <= scaleneB ||
+            scaleneB + scaleneC <= scaleneA
+          ) {
+            throw new Error("Not a valid triangle")
+          }
           results["Area"] = {
             value: calculations.calculateTriangle.scalene.area(scaleneA, scaleneB, scaleneC),
             unit: "square units"
@@ -277,24 +287,25 @@ export function CalculationForm({ shape, onBack, onCalculate }: CalculationFormP
           break
 
         case "Regular Prism":
-          const prismBaseArea = Number(inputs["Base area"])
+          const prismSide = Number(inputs["Base length"])
           const prismHeight = Number(inputs["Height"])
-          const prismLateralArea = Number(inputs["Lateral area"])
+          const prismSideNo = Number(inputs["No. of sides"])
           results["Volume"] = {
-            value: calculations.calculate3D.regularPrism.volume(prismBaseArea, prismHeight),
+            value: calculations.calculate3D.regularPrism.volume(prismSide, prismSideNo, prismHeight),
             unit: "cubic units"
           }
           results["Surface Area"] = {
-            value: calculations.calculate3D.regularPrism.surfaceArea(prismBaseArea, prismLateralArea),
+            value: calculations.calculate3D.regularPrism.surfaceArea(prismSide, prismSideNo, prismHeight),
             unit: "square units"
           }
           break
 
         case "Regular Pyramid":
-          const pyramidBaseArea = Number(inputs["Base area"])
+          const pyramidSide = Number(inputs["Base length"])
           const pyramidHeight = Number(inputs["Height"])
+          const pyramidSideNo = Number(inputs["No. of sides"])
           results["Volume"] = {
-            value: calculations.calculate3D.regularPyramid.volume(pyramidBaseArea, pyramidHeight),
+            value: calculations.calculate3D.regularPyramid.volume(pyramidSide, pyramidSideNo, pyramidHeight),
             unit: "cubic units"
           }
           break

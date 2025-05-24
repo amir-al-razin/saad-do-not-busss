@@ -77,12 +77,13 @@ const shapes: Shape[] = [
     calculations: ["Area", "Perimeter"],
     requiredInputs: {
       "Area": [
-        { label: "Base", type: "number", placeholder: "Enter base" },
-        { label: "Height", type: "number", placeholder: "Enter height" }
+        { label: "Side1", type: "number", placeholder: "Enter adj. side 1" },
+        { label: "Side2", type: "number", placeholder: "Enter adj. side 2" },
+        { label: "Angle (degrees)", type: "number", placeholder: "Enter angle" }
       ],
       "Perimeter": [
-        { label: "Base", type: "number", placeholder: "Enter base" },
-        { label: "Side", type: "number", placeholder: "Enter side length" }
+        { label: "Side1", type: "number", placeholder: "Enter adj. side 1" },
+        { label: "Side2", type: "number", placeholder: "Enter adj. side 2" }
       ]
     }
   },
@@ -95,7 +96,10 @@ const shapes: Shape[] = [
         { label: "Diagonal 1", type: "number", placeholder: "Enter first diagonal" },
         { label: "Diagonal 2", type: "number", placeholder: "Enter second diagonal" }
       ],
-      "Perimeter": [{ label: "Side", type: "number", placeholder: "Enter side length" }],
+      "Perimeter": [
+        { label: "Diagonal 1", type: "number", placeholder: "Enter first diagonal" },
+        { label: "Diagonal 2", type: "number", placeholder: "Enter second diagonal" }
+      ],
       "Side Length": [
         { label: "Diagonal 1", type: "number", placeholder: "Enter first diagonal" },
         { label: "Diagonal 2", type: "number", placeholder: "Enter second diagonal" }
@@ -253,12 +257,14 @@ const shapes: Shape[] = [
     calculations: ["Volume", "Surface Area"],
     requiredInputs: {
       Volume: [
-        { label: "Base area", type: "number", placeholder: "Enter base area" },
-        { label: "Height", type: "number", placeholder: "Enter height" }
+        { label: "Base length", type: "number", placeholder: "Enter base length" },
+        { label: "Height", type: "number", placeholder: "Enter height" },
+        { label: "No. of sides", type: "number", placeholder: "Enter number of sides" }
       ],
       "Surface Area": [
-        { label: "Base area", type: "number", placeholder: "Enter base area" },
-        { label: "Lateral area", type: "number", placeholder: "Enter lateral area" }
+        { label: "Base length", type: "number", placeholder: "Enter base length" },
+        { label: "Height", type: "number", placeholder: "Enter height" },
+        { label: "No. of sides", type: "number", placeholder: "Enter number of sides" }
       ]
     }
   },
@@ -268,8 +274,9 @@ const shapes: Shape[] = [
     calculations: ["Volume"],
     requiredInputs: {
       Volume: [
-        { label: "Base area", type: "number", placeholder: "Enter base area" },
-        { label: "Height", type: "number", placeholder: "Enter height" }
+        { label: "Base length", type: "number", placeholder: "Enter base length" },
+        { label: "Height", type: "number", placeholder: "Enter height" },
+        { label: "No. of sides", type: "number", placeholder: "Enter number of sides" }
       ]
     }
   }
