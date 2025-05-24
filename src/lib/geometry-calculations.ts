@@ -24,13 +24,13 @@ export const calculateTrapezium = {
 }
 
 export const calculateParallelogram = {
-  area: (base: number, height: number) => base * height,
-  perimeter: (base: number, side: number) => 2 * (base + side),
+  area: (side1: number, side2: number, angle: number) => side1 * side2 * Math.sin(angle * (Math.PI / 180)),
+  perimeter: (side1: number, side2: number) => 2 * (side1 + side2),
 }
 
 export const calculateRhombus = {
   area: (diagonal1: number, diagonal2: number) => (diagonal1 * diagonal2) / 2,
-  perimeter: (side: number) => 4 * side,
+  perimeter: (diagonal1: number, diagonal2: number) => 4 * Math.sqrt((diagonal1 * diagonal1 + diagonal2 * diagonal2) / 4),
   sideLength: (diagonal1: number, diagonal2: number) => 
     Math.sqrt((diagonal1 * diagonal1 + diagonal2 * diagonal2) / 4),
 }
@@ -95,10 +95,14 @@ export const calculate3D = {
     },
   },
   regularPrism: {
-    volume: (baseArea: number, height: number) => baseArea * height,
-    surfaceArea: (baseArea: number, lateralArea: number) => 2 * baseArea + lateralArea,
+    volume: (side: number, n: number, height: number) => 
+      calculateRegularPolygon.area(side, n) * height,
+    surfaceArea: (side: number, n: number, height: number) => 
+      2 * calculateRegularPolygon.area(side, n) + 
+      calculateRegularPolygon.perimeter(side, n) * height,
   },
   regularPyramid: {
-    volume: (baseArea: number, height: number) => (1/3) * baseArea * height,
-  },
+    volume: (side: number, n: number, height: number) => 
+      calculateRegularPolygon.area(side, n) * height / 3,
+  }
 } 
